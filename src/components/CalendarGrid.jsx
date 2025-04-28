@@ -30,7 +30,7 @@ const CalendarGrid = ({ currentDate, events }) => {
       </div>
 
       {/* Dates grid */}
-      <div className="grid grid-cols-7 gap-2 sm:gap-4">
+      <div className="grid grid-cols-5 sm:grid-cols-7 gap-2 sm:gap-4">
         {days.map((day, index) => {
           const isToday = day.isSame(dayjs(), "day");
           const dayEvents = getEventsForDay(day);
