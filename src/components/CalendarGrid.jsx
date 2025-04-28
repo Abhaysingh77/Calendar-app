@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 
-const CalendarGrid = ({ currentDate, events }) => {
+const CalendarGrid = ({ currentDate, events, onEventClick }) => {
   const startOfMonth = currentDate.startOf("month");
   const endOfMonth = currentDate.endOf("month");
   const startDate = startOfMonth.startOf("week");
@@ -24,13 +24,13 @@ const CalendarGrid = ({ currentDate, events }) => {
     <div className="space-y-2">
       {/* Days of the week */}
       <div className="grid grid-cols-7 gap-2 sm:gap-4 text-center text-gray-500 text-xs sm:text-sm font-semibold">
-        {weekDays.map((day, idx) => (
-          <div key={idx}>{day}</div>
+        {weekDays.map((dayName, idx) => (
+          <div key={idx}>{dayName}</div>
         ))}
       </div>
 
       {/* Dates grid */}
-      <div className="grid grid-cols-5 sm:grid-cols-7 gap-2 sm:gap-4">
+      <div className="grid grid-cols-7 gap-2 sm:gap-4">
         {days.map((day, index) => {
           const isToday = day.isSame(dayjs(), "day");
           const dayEvents = getEventsForDay(day);
@@ -43,11 +43,13 @@ const CalendarGrid = ({ currentDate, events }) => {
               }`}
             >
               <div className="text-xs sm:text-sm font-bold">{day.date()}</div>
+
               <div className="space-y-1 overflow-y-auto max-h-16 sm:max-h-24">
                 {dayEvents.map((event, idx) => (
                   <div
                     key={idx}
-                    className="text-[10px] sm:text-xs truncate bg-gray-200 rounded px-1 py-0.5 text-black"
+                    onClick={() => onEventClick(event)}
+                    className="cursor-pointer text-[10px] sm:text-xs truncate bg-gray-200 hover:bg-gray-300 rounded px-1 py-0.5 text-black"
                   >
                     {event.title}
                   </div>
